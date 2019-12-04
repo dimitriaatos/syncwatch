@@ -1,0 +1,10 @@
+{
+  "name": "syncwatch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+  },
+  "author": "Dimitri Aatos Ellinas",
+  "license": "CC-BY-4.0"
+}
