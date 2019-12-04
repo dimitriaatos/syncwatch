@@ -16,7 +16,7 @@ const Stopwatch = class {
   
   get ms() {return (this.play ? new Date().getTime() : this.stop) - this.start}
   
-  get formated() {return formatTime(this.ms, this.format)}
+  get formatted() {return formatTime(this.ms, this.format)}
 
   update = newState => {
     Object.assign(this, newState)
