@@ -1,28 +1,31 @@
 const formatTime = require('./formatTime')
 
 const Stopwatch = class {
-  _playing = false
-  start = 0
-  stop = 0
-  format = 'hh:mm:ss.d0'
-  _max = 100 * 60 * 60 * 1000 - 1 // 359999999
-  _callback = () => {}
-  updateTime
-  _steps
-
-  constructor(cb) {
+  
+  constructor(cb, options = {}) {
     this.callback(cb)
+
+    this._playing = false
+    this.start = 0
+    this.stop = 0
+    this.format = 'hh:mm:ss.d0'
+    this._max = 100 * 60 * 60 * 1000 - 1 // 359999999
+    this._callback = () => {}
+    this.updateTime = 50
+    this._steps
+
+    Object.assign(this, options)
   }
   
   get ms() {return (this.play ? new Date().getTime() : this.stop) - this.start}
   
   get formatted() {return formatTime(this.ms, this.format)}
 
-  update = newState => {
+  update(newState) {
     Object.assign(this, newState)
   }
 
-  callback = cb => {
+  callback(cb) {
     this._callback = (t) => {
       cb && cb(t)
     }
@@ -46,7 +49,7 @@ const Stopwatch = class {
     return this._playing
   }
 
-  play = state => {
+  play(state) {
     const now = new Date().getTime()
     if (state) {
       this.start = now - (this.stop - this.start)
@@ -58,7 +61,7 @@ const Stopwatch = class {
     return this
   }
 
-  reset = ms => {
+  reset(ms) {
     if (ms != undefined) {
       ms = Math.round(Math.min(Math.max(ms, -this._max), this._max))
       this.stop = new Date().getTime()
