@@ -17,7 +17,7 @@ const Stopwatch = class {
     Object.assign(this, options)
   }
   
-  get ms() {return (this.playing ? new Date().getTime() : this.stop) - this.start}
+  get ms() {return (this.playing ? Date.now() : this.stop) - this.start}
   
   get formatted() {return formatTime(this.ms, this.format)}
 
@@ -59,8 +59,8 @@ const Stopwatch = class {
     return this._playing
   }
 
-  play(state) {
-    const now = new Date().getTime()
+  toggle(state) {
+    const now = Date.now()
     if (state) {
       this.start = now - (this.stop - this.start)
       this.stop = undefined
@@ -74,13 +74,26 @@ const Stopwatch = class {
   reset(ms) {
     if (ms != undefined) {
       ms = Math.round(Math.min(Math.max(ms, -this.max), this.max))
-      this.stop = new Date().getTime()
+      this.stop = Date.now()
       this.start = this.stop - ms
     } else {
-      this.start = this.stop = new Date().getTime()
+      this.start = this.stop = Date.now()
     }
     this._callback(this)
     return this.output()
+  }
+
+  play() {
+    return this.toggle(true)
+  }
+
+  pause() {
+    return this.toggle(false)
+  }
+
+  stop() {
+    this.toggle(false)
+    return this.reset()
   }
   
 }
