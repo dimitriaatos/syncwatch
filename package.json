@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "author": "Dimitri Aatos Ellinas",
-  "license": "CC-BY-4.0"
+  "license": "CC-BY-4.0",
+  "dependencies": {}
 }
