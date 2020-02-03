@@ -64,9 +64,12 @@ const Syncwatch = class {
 	update(newState) {
 		const {playing, ...rest} = newState
 		Object.assign(this, rest)
-		this._playing != playing ?
-			this.playing = playing :
-			this._callback(this)
+		if (typeof playing == 'number') {
+			this._playing != playing ?
+				this.playing = playing :
+				this._callback(this)
+		}
+		return this.output()
 	}
 
 	/**
