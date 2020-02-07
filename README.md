@@ -7,15 +7,13 @@ A stopwatch class based on start time, with state output and state update method
 
 ## Documentation
 
-**Kind**: global class  
-
 * [Syncwatch](#Syncwatch)
     * [new Syncwatch(cb, options)](#new_Syncwatch_new)
-    * [.start](#Syncwatch+start)
-    * [.stop](#Syncwatch+stop)
+    * [.startTime](#Syncwatch+startTime)
+    * [.stopTime](#Syncwatch+stopTime)
     * [.format](#Syncwatch+format)
-    * [.max](#Syncwatch+max)
-    * [.updateTime](#Syncwatch+updateTime)
+    * [.maxTime](#Syncwatch+maxTime)
+    * [.updateInterval](#Syncwatch+updateInterval)
     * [.ms](#Syncwatch+ms)
     * [.formatted](#Syncwatch+formatted)
     * [.playing](#Syncwatch+playing)
@@ -25,6 +23,7 @@ A stopwatch class based on start time, with state output and state update method
     * [.toggle(playing)](#Syncwatch+toggle)
     * [.reset(ms)](#Syncwatch+reset)
     * [.play()](#Syncwatch+play) ⇒ <code>object</code>
+    * [.start()](#Syncwatch+start) ⇒ <code>object</code>
     * [.pause()](#Syncwatch+pause) ⇒ <code>object</code>
     * [.stop()](#Syncwatch+stop) ⇒ <code>object</code>
 
@@ -43,15 +42,15 @@ import Syncwatch from 'syncwatch'
 const watch = new Syncwatch(watch => console.log(watch.formatted), {format: 'hh/mm/ss'})
 watch.start()
 ```
-<a name="Syncwatch+start"></a>
+<a name="Syncwatch+startTime"></a>
 
-### syncwatch.start
+### syncwatch.startTime
 The starting time of the syncwatch (default: 0).
 
 **Kind**: instance property of [<code>Syncwatch</code>](#Syncwatch)  
-<a name="Syncwatch+stop"></a>
+<a name="Syncwatch+stopTime"></a>
 
-### syncwatch.stop
+### syncwatch.stopTime
 The stopping time, where the time is calculated from when the syncwatch is paused (default: 0).
 
 **Kind**: instance property of [<code>Syncwatch</code>](#Syncwatch)  
@@ -61,16 +60,16 @@ The stopping time, where the time is calculated from when the syncwatch is pause
 The format to use to generate the formatted time (default: hh:mm:ss.d0).
 
 **Kind**: instance property of [<code>Syncwatch</code>](#Syncwatch)  
-<a name="Syncwatch+max"></a>
+<a name="Syncwatch+maxTime"></a>
 
-### syncwatch.max
+### syncwatch.maxTime
 The maximum time (default: 359999999), when the syncwatch exceeds it will go back to 0.
 
 **Kind**: instance property of [<code>Syncwatch</code>](#Syncwatch)  
-<a name="Syncwatch+updateTime"></a>
+<a name="Syncwatch+updateInterval"></a>
 
-### syncwatch.updateTime
-The time interval between the invoking of the callback function
+### syncwatch.updateInterval
+The interval between the invocations of the callback function
 
 **Kind**: instance property of [<code>Syncwatch</code>](#Syncwatch)  
 <a name="Syncwatch+ms"></a>
@@ -138,14 +137,21 @@ Resetting the time of the syncwatch.
 
 **Kind**: instance method of [<code>Syncwatch</code>](#Syncwatch)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| ms | <code>number</code> | New time. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| ms | <code>number</code> | <code>0</code> | New time. |
 
 <a name="Syncwatch+play"></a>
 
 ### syncwatch.play() ⇒ <code>object</code>
 Launching the syncwatch.
+
+**Kind**: instance method of [<code>Syncwatch</code>](#Syncwatch)  
+**Returns**: <code>object</code> - state.  
+<a name="Syncwatch+start"></a>
+
+### syncwatch.start() ⇒ <code>object</code>
+Launching the syncwatch. An alias of play().
 
 **Kind**: instance method of [<code>Syncwatch</code>](#Syncwatch)  
 **Returns**: <code>object</code> - state.  
@@ -162,4 +168,4 @@ Pausing the syncwatch.
 Stopping the syncwatch (goes back to 0).
 
 **Kind**: instance method of [<code>Syncwatch</code>](#Syncwatch)  
-**Returns**: <code>object</code> - state.  
+**Returns**: <code>object</code> - state. 

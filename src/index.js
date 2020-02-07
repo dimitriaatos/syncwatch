@@ -20,19 +20,19 @@ const Syncwatch = class {
 		this._playing = false
 
 		/** The starting time of the syncwatch (default: 0). */
-		this.start = 0
+		this.startTime = 0
 
 		/** The stopping time, where the time is calculated from when the syncwatch is paused (default: 0). */
-		this.stop = 0
+		this.stopTime = 0
 
 		/** The format to use to generate the formatted time (default: hh:mm:ss.d0). */
 		this.format = 'hh:mm:ss.d0'
 
 		/** The maximum time (default: 359999999), when the syncwatch exceeds it will go back to 0. */
-		this.max = 100 * 60 * 60 * 1000 - 1
+		this.maxTime = 100 * 60 * 60 * 1000 - 1
 
-		/** The time interval between the invoking of the callback function */
-		this.updateTime = 50
+		/** The interval between the invocations of the callback function */
+		this.updateInterval = 50
 
 		/* The callback function to be called when the time changes */
 		this._callback = () => {}
@@ -51,7 +51,7 @@ const Syncwatch = class {
   
 	/** The current time in ms. */
 	get ms() {
-		return (this.playing ? Date.now() + this.offset : this.stop) - this.start
+		return (this.playing ? Date.now() + this.offset : this.stopTime) - this.startTime
 	}
   
 	/** The current time in the specified form. */
@@ -64,7 +64,7 @@ const Syncwatch = class {
 	update(newState) {
 		const {playing, ...rest} = newState
 		Object.assign(this, rest)
-		if (typeof playing == 'number') {
+		if (typeof playing != 'undefined') {
 			this._playing != playing ?
 				this.playing = playing :
 				this._callback(this)
@@ -87,7 +87,7 @@ const Syncwatch = class {
    * @return {object} state.
    */
 	output() {
-		return (({playing, start, stop, format, updateTime, max}) => ({playing, start, stop, format, updateTime, max}))(this)
+		return (({playing, startTime, stopTime, format, updateInterval, maxTime}) => ({playing, startTime, stopTime, format, updateInterval, maxTime}))(this)
 	}
 
 	/**
@@ -117,13 +117,13 @@ const Syncwatch = class {
    * An on/off toggle for the syncwatch.
    * @param {bool} playing state
    */
-	toggle(state) {
+	toggle(state = !this.playing) {
 		const now = Date.now()
 		if (state) {
-			this.start = now - (this.stop - this.start)
-			this.stop = undefined
+			this.startTime = now - (this.stopTime - this.startTime)
+			this.stopTime = undefined
 		} else {
-			this.stop = now
+			this.stopTime = now
 		}
 		this.playing = state != 0
 		return this.output()
@@ -133,14 +133,11 @@ const Syncwatch = class {
    * Resetting the time of the syncwatch.
    * @param {number} ms - New time.
    */
-	reset(ms) {
-		if (ms != undefined) {
-			ms = Math.round(Math.min(Math.max(ms, -this.max), this.max))
-			this.stop = Date.now()
-			this.start = this.stop - ms
-		} else {
-			this.start = this.stop = Date.now()
-		}
+	reset(ms = 0) {
+		ms = Math.round(Math.min(Math.max(ms, -this.maxTime), this.maxTime))
+		this.stopTime = Date.now()
+		this.startTime = this.stopTime - ms
+
 		this._callback(this)
 		return this.output()
 	}
@@ -150,6 +147,14 @@ const Syncwatch = class {
    * @return {object} state.
    */
 	play() {
+		return this.toggle(true)
+	}
+
+	/**
+   * Launching the syncwatch. An alias of play().
+   * @return {object} state.
+   */
+	start() {
 		return this.toggle(true)
 	}
 
