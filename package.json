@@ -1,10 +1,19 @@
 {
   "name": "syncwatch",
   "version": "1.0.0",
-  "description": "",
+  "description": "A stopwatch class.",
   "main": "src/index.js",
-  "scripts": {},
+	"scripts": {},
+	"keywords": [
+		"stopwatch",
+		"clock",
+		"start"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/dimitriaatos/syncwatch.git"
+	},
+	"homepage": "https://github.com/dimitriaatos/syncwatch",
   "author": "Dimitri Aatos Ellinas",
-  "license": "CC-BY-4.0",
-  "dependencies": {}
+  "license": "CC-BY-4.0"
 }
