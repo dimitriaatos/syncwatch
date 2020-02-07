@@ -119,11 +119,13 @@ const Syncwatch = class {
    */
 	toggle(state = !this.playing) {
 		const now = Date.now()
-		if (state) {
-			this.startTime = now - (this.stopTime - this.startTime)
-			this.stopTime = undefined
-		} else {
-			this.stopTime = now
+		if (state == !this.playing) {
+			if (state) {
+				this.startTime = now - (this.stopTime - this.startTime)
+				this.stopTime = undefined
+			} else {
+				this.stopTime = now
+			}
 		}
 		this.playing = state != 0
 		return this.output()

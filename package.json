@@ -1,5 +1,5 @@
 {
-  "name": "syncwatch",
+  "name": "@dimitriaatos/syncwatch",
   "version": "1.0.0",
   "description": "A stopwatch class.",
   "main": "src/index.js",
